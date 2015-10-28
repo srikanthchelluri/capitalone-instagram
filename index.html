@@ -1,0 +1,282 @@
+<!--
+Srikanth Chelluri
+October 2015
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <meta name="author" content="Srikanth Chelluri">
+  <meta name="description" content="Using the Instagram API to gather and analyze data for Capital One's Summit for Software Engineers.">
+
+  <title>Instagram API for Capital One</title>
+
+  <!-- Bootstrap -->
+  <link href="css/bootstrap.css" rel="stylesheet">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+  <link href='https://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
+
+  <script src="js/getTop20Photos.js"></script>
+  <script src="js/getTop20PhotosUserInfo_Positivity.js"></script>
+  <script src="js/getBigData.js"></script>
+
+</head>
+
+<body>
+
+  <div class="heading-general" style="margin-top: 2%">
+
+    <div class="heading" align="center">
+      <h3>Analyze <a href="https://instagram.com/explore/tags/capitalone/" target="_blank">#CapitalOne</a> Instagram Data</h3>
+      <h4>Srikanth Chelluri, University of Virginia</h4>
+    </div>
+
+    <br>
+    <hr width="50%">
+    <br>
+
+    <div id="general" align="center" style="width: 96%; margin-left: 2%; margin-right: 2%">
+
+
+      <div class="intro">
+        <p>
+          This is the webpage for my solution to the Capital One Summit for Software Engineers' challenge problem.
+          <br>
+          The challenge problem can be found on <a href="https://www.mindsumo.com/contests/meerkat-api" target="_blank">MindSumo</a>. I use the Instagram API to gather and analyze data.
+          <br><br>
+          The front-end uses Twitter's Bootstrap. The API calls are requested via JQuery (AJAX) and the logic is JavaScript.
+          <br>
+          Further details were submitted via MindSumo (or can be requested via <a href="mailto: sc5ba@virginia.edu" target="_blank">email</a>).
+          <br>
+          <b>N.B. The backend was built with ease-of-readability in mind, not security.</b>
+        </p>
+      </div>
+
+      <br>
+
+      <div class="auth" style="color: #9A0000;">
+        <p>
+          Part of my application requires an <em>access_token</em> from Instagram's API.
+          <br>
+          For it to work, you'll need to grant my application permission (link below).
+          <br>
+          <b>The application won't post to Instagram or otherwise act on your behalf.</b>
+          <h4><b><a href="https://api.instagram.com/oauth/authorize/?client_id=73880779b8354f348b5d66e73df16a00&redirect_uri=http://plato.cs.virginia.edu/~sc5ba/capitalone-instagram/&response_type=token">Authenticate this application.</a></b></h4>
+        </p>
+      </div>
+
+      <br>
+      <h5 align="center">Srikanth Chelluri</h5>
+      <h5 align="center"><a href="mailto:sc5ba@virginia.edu" target="_blank">sc5ba@virginia.edu</a></h5>
+    </div>
+
+    <br>
+
+    <div class="navigation" align="center" style="width: 50%; margin-left: 25%">
+      <div class="row">
+
+        <div class="col-md-4">
+          <a href="#part1">
+            <h3>
+              Part 1
+              <br>
+              (posts)
+            </h3>
+          </a>
+        </div>
+
+        <div class="col-md-4">
+          <a href="#part2">
+            <h3>
+              Part 2
+              <br>
+              (users)
+            </h3>
+          </a>
+        </div>
+
+        <div class="col-md-4">
+          <a href="#part3">
+            <h3>
+              Part 3
+              <br>
+              (positivity)
+            </h3>
+          </a>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+  <br><br>
+  <hr><hr>
+  <br><br>
+
+  <div id="part1" style="width: 96%; margin-left: 2%; margin-right: 2%">
+    <h4 align="center" style="width: 70%; margin-left: 15%">Part 1. Get the 20 latest posts for <a href="https://instagram.com/explore/tags/capitalone/" target="_blank">#CapitalOne</a>, and the like count for each.</h4>
+    <p align="center">
+      Here are the last 20 photos on Instagram with the "capitalone" tag (<a href="https://instagram.com/explore/tags/capitalone/" target="_blank">#capitalone</a>).
+    </p>
+
+    <br><br>
+
+    <div id="top20photos" align="left">
+      <div class="row" id="row1-top20photos"><div class="col-md-2"></div></div>
+      <div class="row" id="row2-top20photos"><div class="col-md-2"></div></div>
+      <div class="row" id="row3-top20photos"><div class="col-md-2"></div></div>
+      <div class="row" id="row4-top20photos"><div class="col-md-2"></div></div>
+      <div class="row" id="row5-top20photos"><div class="col-md-2"></div></div>
+    </div>
+
+  </div>
+
+  <hr width="90%">
+  <br><br>
+
+  <div id="part2" style="width: 96%; margin-left: 2%; margin-right: 2%">
+    <h4 align="center" style="width: 70%; margin-left: 15%">Part 2. Get info about each of the users who posted those 20 latest posts: determine how many posts they have on Instagram, how many followers they have and how many people they follow.</h4>
+    <p align="center">
+      Here's some information about the users who posted recent images.
+      <br>
+      You'll need to <a href="https://api.instagram.com/oauth/authorize/?client_id=73880779b8354f348b5d66e73df16a00&redirect_uri=http://plato.cs.virginia.edu/~sc5ba/capitalone-instagram/&response_type=token">authenticate</a> the application for this part.
+    </p>
+
+    <br><br>
+
+    <div id="top20photosUserInfo" align="left">
+
+      <div class="row" id="row1-top20photosUserInfo-userName"><div class="col-md-2"></div></div>
+      <div class="row" id="row1-top20photosUserInfo-fullName"><div class="col-md-2"></div></div>
+      <div class="row" id="row1-top20photosUserInfo-posts"><div class="col-md-2"></div></div>
+      <div class="row" id="row1-top20photosUserInfo-following"><div class="col-md-2"></div></div>
+      <div class="row" id="row1-top20photosUserInfo-followers"><div class="col-md-2"></div></div>
+
+      <br><br>
+
+      <div class="row" id="row2-top20photosUserInfo-userName"><div class="col-md-2"></div></div>
+      <div class="row" id="row2-top20photosUserInfo-fullName"><div class="col-md-2"></div></div>
+      <div class="row" id="row2-top20photosUserInfo-posts"><div class="col-md-2"></div></div>
+      <div class="row" id="row2-top20photosUserInfo-following"><div class="col-md-2"></div></div>
+      <div class="row" id="row2-top20photosUserInfo-followers"><div class="col-md-2"></div></div>
+
+      <br><br>
+
+      <div class="row" id="row3-top20photosUserInfo-userName"><div class="col-md-2"></div></div>
+      <div class="row" id="row3-top20photosUserInfo-fullName"><div class="col-md-2"></div></div>
+      <div class="row" id="row3-top20photosUserInfo-posts"><div class="col-md-2"></div></div>
+      <div class="row" id="row3-top20photosUserInfo-following"><div class="col-md-2"></div></div>
+      <div class="row" id="row3-top20photosUserInfo-followers"><div class="col-md-2"></div></div>
+
+      <br><br>
+
+      <div class="row" id="row4-top20photosUserInfo-userName"><div class="col-md-2"></div></div>
+      <div class="row" id="row4-top20photosUserInfo-fullName"><div class="col-md-2"></div></div>
+      <div class="row" id="row4-top20photosUserInfo-posts"><div class="col-md-2"></div></div>
+      <div class="row" id="row4-top20photosUserInfo-following"><div class="col-md-2"></div></div>
+      <div class="row" id="row4-top20photosUserInfo-followers"><div class="col-md-2"></div></div>
+
+      <br><br>
+
+      <div class="row" id="row5-top20photosUserInfo-userName"><div class="col-md-2"></div></div>
+      <div class="row" id="row5-top20photosUserInfo-fullName"><div class="col-md-2"></div></div>
+      <div class="row" id="row5-top20photosUserInfo-posts"><div class="col-md-2"></div></div>
+      <div class="row" id="row5-top20photosUserInfo-following"><div class="col-md-2"></div></div>
+      <div class="row" id="row5-top20photosUserInfo-followers"><div class="col-md-2"></div></div>
+
+      <br>
+
+    </div>
+  </div>
+
+  <hr width="90%">
+  <br><br>
+
+  <div id="part3" style="width: 96%; margin-left: 2%; margin-right: 2%">
+    <h4 align="center" style="width: 70%; margin-left: 15%">Part 3. Determine how many posts are positive towards Capital One, how many are negative, and how many are simply neutral.</h4>
+    <p align="center">
+      Here's some information about the positivity of recent posts.
+      <br>
+      You'll need to <a href="https://api.instagram.com/oauth/authorize/?client_id=73880779b8354f348b5d66e73df16a00&redirect_uri=http://plato.cs.virginia.edu/~sc5ba/capitalone-instagram/&response_type=token">authenticate</a> this application for this part, too.
+    </p>
+
+    <br><br>
+
+    <div id="top20photosPositivity" align="left">
+
+      <div class="row" id="row-top20photosPositivity">
+        <div class="col-md-3"></div>
+      </div>
+
+      <br><br><br>
+
+      <div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-8">
+          <ul id="row-top20captionsList"></ul>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+  <hr width="90%">
+  <br><br>
+
+  <div id="part4" style="width: 96%; margin-left: 2%; margin-right: 2%">
+    <h4 align="center" style="width: 70%; margin-left: 15%">Part 4. Fetch more posts than just 20, and generate some sort of visual that shows whether #CapitalOne is trending positively or negatively.</h4>
+    <p align="center">
+      Below are some visual representations of the positivity of the last 200 posts with the "capitalone" tag (<a href="https://instagram.com/explore/tags/capitalone/" target="_blank">#capitalone</a>).
+      <br>
+      You'll need to <a href="https://api.instagram.com/oauth/authorize/?client_id=73880779b8354f348b5d66e73df16a00&redirect_uri=http://plato.cs.virginia.edu/~sc5ba/capitalone-instagram/&response_type=token">authenticate</a> this application for this part, too.
+      <br>
+      <em>Because this part is fetching a large amount of data, give it a minute or so.</em>
+    </p>
+
+    <br><br>
+
+    <div id="chart1" class="chart1">
+      <h5 align="center"><b>The pie chart below shows the distribution of positive and negative words in the last 200 posts.</b></h5>
+      <br>
+      <div id="piechart" class="piechart" align="center"></div>
+    </div>
+
+    <br><br>
+
+    <div id="chart2" class="chart2">
+      <h5 align="center">
+        <b>The bar graph below shows you what each caption was rated.</b><br>
+        Key: small is negative, medium is neutral, big is positive.<br>
+        From top to bottom, it displays most recent to least recent.
+      </h5>
+      <br>
+      <div id="bargraph" class="bargraph" align="center"></div>
+    </div>
+
+    <br><br>
+
+    <div id="words3" class="words3">
+      <h5 align="center"><b>Below are the collections of the positive and negative words that were found.</b></h5>
+      <div id="wordCollection" class="wordCollection" align="center"></div>
+    </div>
+
+  </div>
+
+</div>
+
+<br><br>
+
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="js/bootstrap.min.js"></script>
+</body>
+</html>
